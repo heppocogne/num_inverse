@@ -7,7 +7,7 @@ from tensorflow import keras as keras
 from keras.datasets import mnist
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, InputLayer, Flatten, Conv2D, MaxPooling2D
-from keras.optimizers import RMSprop, Adagrad
+from keras.optimizers import RMSprop, Adagrad, Adam
 from sklearn.model_selection import train_test_split
 
 
@@ -74,6 +74,22 @@ if __name__ == "__main__":
         model.compile(loss='categorical_crossentropy', optimizer='adagrad', metrics=['accuracy'])
 
         model_name = "cnn-and-dense"
+    elif sys.argv[1]=="2":
+        # 前処理(2)
+        x_train = x_train.reshape(x_train.shape[0], 28, 28, 1)
+        x_valid = x_valid.reshape(x_valid.shape[0], 28, 28, 1)
+        x_test = x_test.reshape(x_test.shape[0], 28, 28, 1)
+
+        model.add(Conv2D(16, (3,3), activation='relu', input_shape=(28, 28, 1)))
+        model.add(MaxPooling2D())
+        model.add(Conv2D(16, (3,3), activation='relu'))
+        model.add(MaxPooling2D())
+        model.add(Flatten())
+        model.add(Dense(10, activation='softmax'))
+
+        model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+
+        model_name='simple-cnn'
 
 
     # 学習
