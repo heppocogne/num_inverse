@@ -6,8 +6,8 @@ import tensorflow
 from tensorflow import keras as keras
 from keras.datasets import mnist
 from keras.models import Sequential
-from keras.layers import Dense, Dropout, InputLayer
-from keras.optimizers import RMSprop
+from keras.layers import Dense, Dropout, InputLayer, Flatten, Conv2D, MaxPooling2D
+from keras.optimizers import RMSprop, Adagrad
 from sklearn.model_selection import train_test_split
 
 
@@ -45,7 +45,7 @@ if __name__ == "__main__":
     # モデル構築
     model = Sequential()
     model_name = ""
-    if len(sys.argv)==1 or sys.argv[1]==0:
+    if len(sys.argv)==1 or sys.argv[1]=="0":
         # 前処理(2)
         x_train = x_train.reshape(train_size, 784)
         x_valid = x_valid.reshape(valid_size, 784)
@@ -56,6 +56,22 @@ if __name__ == "__main__":
         model.compile(loss='categorical_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
 
         model_name = "simple-dnn"
+    elif sys.argv[1]=="1":
+        # 前処理(2)
+        x_train = x_train.reshape(x_train.shape[0], 28, 28, 1)
+        x_valid = x_valid.reshape(x_valid.shape[0], 28, 28, 1)
+        x_test = x_test.reshape(x_test.shape[0], 28, 28, 1)
+
+        model.add(Conv2D(32, kernel_size=(3, 3), activation='relu', input_shape=(28, 28, 1)))
+        model.add(MaxPooling2D(pool_size=(2, 2)))
+        model.add(Dropout(0.25))
+        model.add(Flatten())
+        model.add(Dense(128, activation='relu'))
+        model.add(Dense(10, activation='softmax'))
+
+        model.compile(loss='categorical_crossentropy', optimizer='adagrad', metrics=['accuracy'])
+
+        model_name = "cnn-and-dnn"
 
 
     # 学習
