@@ -80,7 +80,7 @@ if __name__ == "__main__":
         x_valid = x_valid.reshape(x_valid.shape[0], 28, 28, 1)
         x_test = x_test.reshape(x_test.shape[0], 28, 28, 1)
 
-        model.add(Conv2D(16, (3,3), activation='relu', input_shape=(28, 28, 1)))
+        model.add(Conv2D(32, (5,5), activation='relu', input_shape=(28, 28, 1)))
         model.add(MaxPooling2D())
         model.add(Conv2D(16, (3,3), activation='relu'))
         model.add(MaxPooling2D())
