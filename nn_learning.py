@@ -55,7 +55,7 @@ if __name__ == "__main__":
         model.add(Dense(10, activation='softmax'))
         model.compile(loss='categorical_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
 
-        model_name = "simple-dnn"
+        model_name = "simple-dense"
     elif sys.argv[1]=="1":
         # 前処理(2)
         x_train = x_train.reshape(x_train.shape[0], 28, 28, 1)
@@ -73,7 +73,7 @@ if __name__ == "__main__":
 
         model.compile(loss='categorical_crossentropy', optimizer='adagrad', metrics=['accuracy'])
 
-        model_name = "cnn-and-dnn"
+        model_name = "cnn-and-dense"
 
 
     # 学習
