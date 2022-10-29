@@ -6,7 +6,7 @@ import tensorflow
 from tensorflow import keras as keras
 from keras.datasets import mnist
 from keras.models import Sequential
-from keras.layers import Dense, Dropout, InputLayer, Flatten, Conv2D, MaxPooling2D
+from keras.layers import Dense, Dropout, InputLayer, Flatten, Conv2D, MaxPooling2D, BatchNormalization, Activation
 from keras.optimizers import RMSprop, Adagrad, Adam
 from sklearn.model_selection import train_test_split
 
@@ -84,6 +84,9 @@ if __name__ == "__main__":
         model.add(MaxPooling2D())
         model.add(Conv2D(16, (3,3), activation='relu'))
         model.add(MaxPooling2D())
+        model.add(BatchNormalization())
+        model.add(Activation('relu'))
+        model.add(Dropout(0.25))
         model.add(Flatten())
         model.add(Dense(10, activation='softmax'))
 
